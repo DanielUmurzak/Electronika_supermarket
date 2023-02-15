@@ -122,32 +122,3 @@ async def z_flip_callback_func(call: CallbackQuery):
     await call.message.delete()
 
 
-@dp.callback_query_handler(text="buy_item")
-async def buy_item_func(call: CallbackQuery):
-    text = "Haridni yakunlash uchun locatsiyani kiriting\n" \
-           "Locatsiyani bosing"
-    await call.message.answer(text, reply_markup=location_button)
-    await call.message.delete()
-    await PersonalData.location.set()
-
-
-@dp.message_handler(state=PersonalData.location)
-async def location(msg: Message, state: FSMContext):
-    await state.update_data(locatsiya=location)
-    text = "Contactni bosing"
-    await msg.answer(text, reply_markup=contact_button)
-    await PersonalData.next()
-
-
-@dp.message_handler(state=PersonalData.number)
-async def number(msg: Message, state: FSMContext):
-    text = "Haridingiz qabul qilindi va 1 hafta ichida yetkazib beriladi, salomat boling."
-    await msg.answer(text)
-    await state.finish()
-    await state.reset_state()
-
-
-@dp.callback_query_handler(text="bosh_menu")
-async def bosh_menu_func(call: CallbackQuery):
-    await call.message.answer(f"Salom", reply_markup=menu_button)
-    await call.message.delete()

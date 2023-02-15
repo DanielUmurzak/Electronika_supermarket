@@ -16,4 +16,5 @@ from . import muzlatgich_handler
 from . import washing_machine_handler
 from . import microvawe_handler
 from . import gaz_plita_handler
+from . import buy_item_handler
 from . import echo
